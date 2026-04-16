@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Copla Registry — Pricing</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f1117;
+    --ink-soft: #4a4f5e;
+    --ink-muted: #9299a8;
+    --surface: #f7f8fa;
+    --card: #ffffff;
+    --border: #e2e5ec;
+    --accent: #1a56ff;
+    --accent-soft: #eef1ff;
+    --success: #0d9e6e;
+    --success-soft: #e6f7f2;
+    --warn: #c85a00;
+    --warn-soft: #fff4ec;
+    --danger: #d9213a;
+    --danger-soft: #ffedf0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--surface);
+    color: var(--ink);
+    min-height: 100vh;
+    padding: 40px 20px 80px;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 20px;
+  }
+
+  .logo-dot {
+    width: 7px; height: 7px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(28px, 4vw, 42px);
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+
+  .subtitle {
+    color: var(--ink-soft);
+    font-size: 15px;
+    font-weight: 300;
+  }
+
+  .wrapper {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  /* ── PLANS ── */
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 16px;
+  }
+
+  .plans-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+
+  .plan-card {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 18px 18px;
+    position: relative;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+
+  .plan-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+
+  .plan-card.recommended {
+    border-color: var(--accent);
+  }
+
+  .plan-badge {
+    position: absolute;
+    top: -11px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .plan-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+  }
+
+  .plan-contracts {
+    font-size: 12px;
+    color: var(--ink-muted);
+    margin-bottom: 14px;
+  }
+
+  .plan-price-annual {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .plan-price-annual span {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--ink-soft);
+  }
+
+  .plan-ppc {
+    font-size: 12px;
+    color: var(--ink-muted);
+    margin-top: 4px;
+  }
+
+  .plan-note {
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    line-height: 1.5;
+  }
+
+  /* ── MULTI-YEAR ── */
+  .multiyear {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 40px;
+  }
+
+  .multiyear-header {
+    display: grid;
+    grid-template-columns: 130px 1fr 1fr 1fr;
+    gap: 0;
+    background: var(--ink);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .mh-cell {
+    padding: 11px 16px;
+    border-right: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .mh-cell:last-child { border-right: none; }
+
+  .mh-cell.highlight {
+    background: var(--accent);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .mh-cell.highlight::after {
+    content: '★ focus';
+    font-size: 10px;
+    opacity: 0.8;
+  }
+
+  .multiyear-row {
+    display: grid;
+    grid-template-columns: 130px 1fr 1fr 1fr;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+
+  .multiyear-row:last-child { border-bottom: none; }
+
+  .mr-cell {
+    padding: 13px 16px;
+    border-right: 1px solid var(--border);
+    color: var(--ink-soft);
+  }
+
+  .mr-cell:last-child { border-right: none; }
+
+  .mr-cell.plan-col {
+    font-weight: 600;
+    color: var(--ink);
+    font-size: 13px;
+  }
+
+  .mr-cell.contracts-col {
+    font-size: 12px;
+    color: var(--ink-muted);
+  }
+
+  .mr-cell.price-col {
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .mr-cell.highlight-col {
+    background: var(--accent-soft);
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .mr-cell.best-col {
+    color: var(--ink-soft);
+  }
+
+  .discount-tag {
+    display: inline-block;
+    background: var(--success-soft);
+    color: var(--success);
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 20px;
+    margin-left: 6px;
+  }
+
+  /* ── YEAR TOGGLE ── */
+  .year-toggle {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  .year-btn {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface);
+    color: var(--ink-soft);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+  }
+
+  .year-btn:hover { border-color: var(--accent); color: var(--ink); }
+
+  .year-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .year-btn .yr-discount {
+    display: block;
+    font-size: 10px;
+    opacity: 0.75;
+    margin-top: 2px;
+  }
+
+  .year-btn.active .yr-discount { opacity: 0.9; }
+
+  /* ── CUSTOM CALC ── */
+  .calc-card {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 40px;
+  }
+
+  .calc-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    margin-bottom: 6px;
+  }
+
+  .calc-desc {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-bottom: 24px;
+  }
+
+  .calc-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 560px) {
+    .calc-inputs { grid-template-columns: 1fr; }
+    .multiyear-header, .multiyear-row { grid-template-columns: 100px 1fr 1fr 1fr; }
+    .mh-cell, .mr-cell { padding: 10px 10px; font-size: 12px; }
+  }
+
+  .input-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 8px;
+  }
+
+  .input-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  input[type=range] {
+    flex: 1;
+    accent-color: var(--accent);
+    height: 4px;
+    cursor: pointer;
+  }
+
+  .val-box {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    min-width: 64px;
+    text-align: center;
+  }
+
+  .manual-input {
+    width: 72px;
+    font-family: 'DM Sans', sans-serif;
+    outline: none;
+    transition: border-color 0.15s;
+    -moz-appearance: textfield;
+  }
+
+  .manual-input::-webkit-outer-spin-button,
+  .manual-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+  .manual-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+
+  .manual-input.input-error {
+    border-color: var(--danger);
+    box-shadow: 0 0 0 3px var(--danger-soft);
+    animation: shake 0.3s ease;
+  }
+
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+  }
+
+  .tip-note {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    background: #fffbeb;
+    border: 1.5px solid #f0d060;
+    border-radius: 10px;
+    padding: 13px 16px;
+    font-size: 13px;
+    color: #6b5a00;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+
+  .tip-note strong { color: #4a3d00; }
+  .tip-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+  .range-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--ink-muted);
+    margin-top: 4px;
+  }
+
+  .calc-result {
+    background: var(--surface);
+    border-radius: 12px;
+    padding: 20px 24px;
+    border: 1.5px solid var(--border);
+    transition: border-color 0.2s;
+  }
+
+  .calc-result.valid { border-color: var(--success); }
+
+  .result-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 14px;
+  }
+
+  .result-row:last-child { margin-bottom: 0; }
+
+  .result-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 14px 0;
+  }
+
+  .result-label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-muted);
+    margin-bottom: 4px;
+  }
+
+  .result-price {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .result-price.secondary {
+    font-size: 22px;
+    color: var(--ink-soft);
+  }
+
+  .result-sub {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-top: 4px;
+  }
+
+  .result-badge {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.4;
+    white-space: nowrap;
+  }
+
+  .result-badge.valid   { background: var(--success-soft); color: var(--success); }
+  .result-badge.saving  { background: var(--accent-soft);  color: var(--accent); font-size: 12px; }
+
+  /* ── NOTES ── */
+  .notes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 10px;
+    margin-bottom: 40px;
+  }
+
+  .note-chip {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  .note-chip.key {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+
+  .note-chip.key strong { color: var(--accent); }
+
+  .note-chip strong {
+    color: var(--ink);
+    display: block;
+    margin-bottom: 3px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <header>
+    <div class="logo"><span class="logo-dot"></span>Copla Registry</div>
+    <h1>Pricing Reference</h1>
+    <p class="subtitle">For use during prospect calls — not for sharing externally</p>
+    <p class="subtitle" style="margin-top:6px;font-size:13px;color:var(--ink-muted);">All prices exclude VAT</p>
+  </header>
+
+  <!-- PLANS -->
+  <p class="section-label">Standard plans — annual pricing</p>
+  <div class="plans-grid">
+
+    <div class="plan-card">
+      <div class="plan-name">Starter</div>
+      <div class="plan-contracts">Up to 10 contracts</div>
+      <div class="plan-price-annual">€500 <span>/ yr</span></div>
+      <div class="plan-ppc">€50 per contract</div>
+      <div class="plan-note">Entry point only. No Incidents reporting or EBA registers. Don't lead with this.</div>
+    </div>
+
+    <div class="plan-card">
+      <div class="plan-name">Growth</div>
+      <div class="plan-contracts">Up to 40 contracts</div>
+      <div class="plan-price-annual">€1,000 <span>/ yr</span></div>
+      <div class="plan-ppc">€25 per contract</div>
+      <div class="plan-note">Real usage. Average business. Good starting conversation.</div>
+    </div>
+
+    <div class="plan-card recommended">
+      <div class="plan-badge">Sell this</div>
+      <div class="plan-name">Scale</div>
+      <div class="plan-contracts">Up to 100 contracts</div>
+      <div class="plan-price-annual">€2,400 <span>/ yr</span></div>
+      <div class="plan-ppc">€24 per contract</div>
+      <div class="plan-note">Mature teams, multiple contract owners. Target for 2-year deal.</div>
+    </div>
+
+    <div class="plan-card">
+      <div class="plan-name">Large</div>
+      <div class="plan-contracts">Up to 500 contracts</div>
+      <div class="plan-price-annual">€10,000 <span>/ yr</span></div>
+      <div class="plan-ppc">€20 per contract</div>
+      <div class="plan-note">Centralized orgs, large corp. Executive approval required.</div>
+    </div>
+
+    <div class="plan-card">
+      <div class="plan-name">Unlimited</div>
+      <div class="plan-contracts">Unlimited contracts</div>
+      <div class="plan-price-annual" style="font-size:18px;padding-top:4px;">Custom</div>
+      <div class="plan-ppc">Enterprise pricing</div>
+      <div class="plan-note">Discuss case by case. Consult CEO before quoting.</div>
+    </div>
+
+  </div>
+
+  <!-- MULTI-YEAR -->
+  <p class="section-label">Multi-year pricing</p>
+  <div class="multiyear">
+    <div class="multiyear-header">
+      <div class="mh-cell">Plan</div>
+      <div class="mh-cell">1 year</div>
+      <div class="mh-cell highlight">2 years</div>
+      <div class="mh-cell">3 years</div>
+    </div>
+    <div class="multiyear-row">
+      <div class="mr-cell plan-col">Starter</div>
+      <div class="mr-cell price-col">€500</div>
+      <div class="mr-cell highlight-col">€850 <span class="discount-tag">−15%</span></div>
+      <div class="mr-cell best-col">€1,100 <span class="discount-tag">−27%</span></div>
+    </div>
+    <div class="multiyear-row">
+      <div class="mr-cell plan-col">Growth</div>
+      <div class="mr-cell price-col">€1,000</div>
+      <div class="mr-cell highlight-col">€1,700 <span class="discount-tag">−15%</span></div>
+      <div class="mr-cell best-col">€2,200 <span class="discount-tag">−27%</span></div>
+    </div>
+    <div class="multiyear-row">
+      <div class="mr-cell plan-col">Scale</div>
+      <div class="mr-cell price-col">€2,400</div>
+      <div class="mr-cell highlight-col">€4,000 <span class="discount-tag">−17%</span></div>
+      <div class="mr-cell best-col">€5,400 <span class="discount-tag">−25%</span></div>
+    </div>
+    <div class="multiyear-row">
+      <div class="mr-cell plan-col">Large</div>
+      <div class="mr-cell price-col">€10,000</div>
+      <div class="mr-cell highlight-col">€17,000 <span class="discount-tag">−15%</span></div>
+      <div class="mr-cell best-col">€22,500 <span class="discount-tag">−25%</span></div>
+    </div>
+  </div>
+
+  <!-- CUSTOM CALC -->
+  <p class="section-label">Custom pricing calculator — 100 to 400 contracts</p>
+  <div class="calc-card">
+    <div class="calc-title">Between Scale and Large</div>
+    <div class="calc-desc">For prospects between 100 and 500 contracts. Price per contract is locked between €20 (Large rate) and €24 (Scale rate).</div>
+
+    <div class="calc-inputs">
+      <div class="input-group">
+        <label>Number of contracts</label>
+        <div class="input-row">
+          <input type="range" id="contracts" min="100" max="400" step="1" value="200" oninput="syncFromSlider('contracts')">
+          <input type="number" id="contracts-input" min="100" max="400" value="200" class="val-box manual-input" oninput="syncFromInput('contracts')" onblur="blurInput('contracts')">
+        </div>
+        <div class="range-labels"><span>100</span><span>400</span></div>
+      </div>
+
+      <div class="input-group">
+        <label>Price per contract (€)</label>
+        <div class="input-row">
+          <input type="range" id="ppc" min="20" max="24" step="0.5" value="24" oninput="syncFromSlider('ppc')">
+          <input type="number" id="ppc-input" min="20" max="24" step="0.5" value="24" class="val-box manual-input" oninput="syncFromInput('ppc')" onblur="blurInput('ppc')">
+        </div>
+        <div class="range-labels"><span>€20 — Large rate</span><span>€24 — Scale rate</span></div>
+      </div>
+    </div>
+
+    <div class="tip-note">
+      <span class="tip-icon">💡</span>
+      <span><strong>Always quote +20 contracts.</strong> If the client says they have 150 contracts and the Large plan is too expensive, enter 170 in the calculator and present it as a tailored offer.</span>
+    </div>
+
+    <div style="margin-bottom:20px;">
+      <label class="section-label" style="margin-bottom:10px;display:block;">Contract length</label>
+      <div class="year-toggle">
+        <button class="year-btn" data-years="1" onclick="setYears(1)">
+          1 year
+          <span class="yr-discount">no discount</span>
+        </button>
+        <button class="year-btn active" data-years="2" onclick="setYears(2)">
+          2 years
+          <span class="yr-discount">−15%</span>
+        </button>
+        <button class="year-btn" data-years="3" onclick="setYears(3)">
+          3 years
+          <span class="yr-discount">−25%</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="calc-result valid" id="result-box">
+      <div class="result-row">
+        <div>
+          <div class="result-label">Total contract value</div>
+          <div class="result-price" id="result-price-total">€8,160</div>
+          <div class="result-sub" id="result-sub-total">2-year deal · −15% discount applied</div>
+        </div>
+        <div class="result-badge valid" id="result-badge">✓ Valid</div>
+      </div>
+      <hr class="result-divider">
+      <div class="result-row">
+        <div>
+          <div class="result-label">Annual price</div>
+          <div class="result-price secondary" id="result-price-annual">€4,080 / yr</div>
+          <div class="result-sub" id="result-sub-annual">200 contracts × €24</div>
+        </div>
+        <div class="result-badge saving" id="result-saving">vs Large plan: saves €5,840 / yr</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOTES -->
+  <p class="section-label">Call notes</p>
+  <div class="notes-grid">
+    <div class="note-chip key"><strong>Free trial — always offer</strong>1 week, must give. Extend by 1 week each time on request.</div>
+    <div class="note-chip key"><strong>Goal: 2-year deals</strong>Lock in and upsell. 1-year is an acceptable fallback.</div>
+    <div class="note-chip key"><strong>Pricing is per contract</strong>Unlimited providers, unlimited users. One provider can have many contracts.</div>
+    <div class="note-chip"><strong>Incident register</strong>Included in all plans. Starter is the only exception — no Incidents or EBA registers.</div>
+    <div class="note-chip"><strong>Bigger discounts</strong>Possible at your discretion in won/lost situations.</div>
+    <div class="note-chip"><strong>Enterprise / Unlimited</strong>Don't quote without consulting the CEO first.</div>
+  </div>
+
+</div>
+
+<script>
+  let selectedYears = 2;
+
+  function setYears(y) {
+    selectedYears = y;
+    document.querySelectorAll('.year-btn').forEach(b => {
+      b.classList.toggle('active', parseInt(b.dataset.years) === y);
+    });
+    update();
+  }
+
+  function syncFromSlider(field) {
+    const slider = document.getElementById(field);
+    const input = document.getElementById(field + '-input');
+    input.value = slider.value;
+    input.classList.remove('input-error');
+    update();
+  }
+
+  function syncFromInput(field) {
+    // While typing, just update if value is already valid — don't clamp mid-type
+    const input = document.getElementById(field + '-input');
+    const slider = document.getElementById(field);
+    const val = parseFloat(input.value);
+    const min = parseFloat(input.min);
+    const max = parseFloat(input.max);
+    input.classList.remove('input-error');
+    if (!isNaN(val) && val >= min && val <= max) {
+      slider.value = val;
+      update();
+    }
+    // If out of range, don't update the result — it stays at last valid value
+    // Blur will clamp and snap
+  }
+
+  function blurInput(field) {
+    const input = document.getElementById(field + '-input');
+    const slider = document.getElementById(field);
+    let val = parseFloat(input.value);
+    const min = parseFloat(input.min);
+    const max = parseFloat(input.max);
+    if (isNaN(val) || val < min || val > max) {
+      const clamped = isNaN(val) ? min : Math.min(max, Math.max(min, val));
+      input.value = clamped;
+      slider.value = clamped;
+      input.classList.add('input-error');
+      setTimeout(() => input.classList.remove('input-error'), 1200);
+      update();
+    }
+  }
+
+  function fmt(n) {
+    return '€' + Math.round(n).toLocaleString('de-DE');
+  }
+
+  function update() {
+    const c = parseInt(document.getElementById('contracts').value);
+    const p = parseFloat(document.getElementById('ppc').value);
+    const annualBase = c * p;
+    const LARGE_ANNUAL = 10000;
+
+    const discountMap = { 1: 0, 2: 0.15, 3: 0.25 };
+    const discount = discountMap[selectedYears];
+    const totalContract = annualBase * selectedYears * (1 - discount);
+    const effectiveAnnual = totalContract / selectedYears;
+    const largeTotalContract = LARGE_ANNUAL * selectedYears * (1 - discount);
+    const savingVsLarge = largeTotalContract - totalContract;
+
+    const yearLabel = selectedYears === 1 ? '1-year deal · no discount' : selectedYears === 2 ? '2-year deal · −15% discount applied' : '3-year deal · −25% discount applied';
+
+    document.getElementById('result-price-total').textContent = fmt(totalContract);
+    document.getElementById('result-sub-total').textContent = yearLabel;
+    document.getElementById('result-price-annual').textContent = fmt(effectiveAnnual) + ' / yr';
+    document.getElementById('result-sub-annual').textContent = `${c} contracts × €${p.toFixed(p % 1 === 0 ? 0 : 1)}`;
+
+    const savingEl = document.getElementById('result-saving');
+    if (savingVsLarge > 0) {
+      const termLabel = selectedYears === 1 ? 'over 1 year' : `over ${selectedYears} years`;
+      savingEl.textContent = `vs Large plan: prospect saves ${fmt(savingVsLarge)} ${termLabel}`;
+      savingEl.style.display = '';
+    } else {
+      savingEl.style.display = 'none';
+    }
+  }
+
+  update();
+</script>
+</body>
+</html>
